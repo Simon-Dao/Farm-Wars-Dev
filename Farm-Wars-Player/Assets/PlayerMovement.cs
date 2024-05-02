@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Animator animator;
-    public float moveSpeed = 5f;
+    public float sprintSpeed = 10f;
+    public float walkSpeed = 5f;
+    private float moveSpeed = 0;
     private float horizontalInput;
     private float verticalInput;
     private string currentState;
@@ -29,10 +31,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if(Input.GetKey(KeyCode.LeftShift)) {
-            moveSpeed = 10f;
             isRunning = true;
         } else {
-            moveSpeed = 5f;
             isRunning = false;
         }
 
@@ -65,7 +65,12 @@ public class PlayerMovement : MonoBehaviour
 
 
         Vector3 moveDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        if(isRunning) {
+            moveSpeed = sprintSpeed;
+        } else {
+            moveSpeed = walkSpeed;
+        }
+            transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
     }
 
     void CheckDirection() {
