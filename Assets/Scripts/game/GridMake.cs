@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -15,6 +16,16 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         GenerateGrid();
+    }
+
+    private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+
+        if(stream.IsWriting) {
+            stream.SendNext(_tiles);
+
+        } else if(stream.IsReading) {
+            _tiles = (Dictionary<Vector2, Tile>)stream.ReceiveNext();
+        }
     }
 
     void GenerateGrid()
