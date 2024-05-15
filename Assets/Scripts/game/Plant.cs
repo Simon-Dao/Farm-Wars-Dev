@@ -6,6 +6,7 @@ using UnityEngine;
 public class Plant : MonoBehaviour
 {
     [SerializeField] private GameObject _self;
+    [SerializeField] private Tile parentTile;
     public float _value;
     public float _growTime;
     public float _decayBuffer;
@@ -25,12 +26,12 @@ public class Plant : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.E) && decay)
+        if (parentTile._ePressed && decay)
         {
             Bank.money += _copyValue;
             decay = false;
             _self.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
-            _self.SetActive(false);
+            parentTile.CallPlantChange(false);
             Reset();
         }
         if (decay)
@@ -56,6 +57,8 @@ public class Plant : MonoBehaviour
                 _self.GetComponent<SpriteRenderer>().color = _claimColor;
             }
         }
+
+        _self.SetActive(parentTile._plant_active);
     }
     void OnMouseDown()
     {
@@ -64,7 +67,7 @@ public class Plant : MonoBehaviour
             Bank.money += _copyValue;
             decay = false;
             _self.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
-            _self.SetActive(false);
+            parentTile.CallPlantChange(false);
             Reset();
         }
     }

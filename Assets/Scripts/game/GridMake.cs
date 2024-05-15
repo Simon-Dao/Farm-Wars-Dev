@@ -36,14 +36,13 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < _height; y++)
             {
                 var worldPosition = _grid.GetCellCenterWorld(new Vector3Int(x, y));
-                var spawnedTile = Instantiate(_tilePrefab, worldPosition, Quaternion.identity);
+                var spawnedTile = PhotonNetwork.Instantiate(_tilePrefab.name, worldPosition, Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {y}";
 
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
-                spawnedTile.Init(isOffset);
+                spawnedTile.GetComponent<Tile>().Init(isOffset);
 
-
-                _tiles[new Vector2(x, y)] = spawnedTile;
+                _tiles[new Vector2(x, y)] = spawnedTile.GetComponent<Tile>();
             }
         }
 
