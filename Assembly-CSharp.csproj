@@ -72,9 +72,9 @@
     <Compile Include="Assets\Tiles\ForestTile.cs" />
     <Compile Include="Assets\Bank.cs" />
     <Compile Include="Assets\GridMake.cs" />
+    <Compile Include="Assets\Tiles\Plant.cs" />
     <Compile Include="Assets\Tiles\LandTile.cs" />
     <Compile Include="Assets\DisplayMoney.cs" />
-    <Compile Include="Assets\Plant.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -20,9 +20,9 @@ public class GridManager : MonoBehaviour
     void GenerateGrid()
     {
         _tiles = new Dictionary<Vector2, Tile>();
-        for (int x = 0; x < _width; x++)
+        for (int x = -(_height / 2); x < _height / 2; x++)
         {
-            for (int y = 0; y < _height; y++)
+            for (int y = -(_width / 2); y < _width / 2; y++)
             {
                 var randomTile = UnityEngine.Random.Range(0, 5) < 3 ? _forestTile : _landTile;
                 if (randomTile == _forestTile) randomTile = UnityEngine.Random.Range(0, 5) == 4 ? _waterTile : _forestTile;

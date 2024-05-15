@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4890728144963493935}
   - component: {fileID: 2537656216849218152}
-  - component: {fileID: 1422402194179049730}
   - component: {fileID: 7445229770795177698}
   - component: {fileID: 5884895220027027463}
+  - component: {fileID: -4769728392734342976}
   m_Layer: 0
   m_Name: WaterTile
   m_TagString: Untagged
@@ -90,24 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1422402194179049730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1403911308933903882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d646405ed6e8074478a9474011160f20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _baseColor: {r: 0.27843136, g: 0.46627626, b: 0.8784314, a: 1}
-  _offsetColor: {r: 0.36124954, g: 0.46288037, b: 0.7735849, a: 1}
-  _renderer: {fileID: 2537656216849218152}
-  _highlight: {fileID: 8064040239559799985}
-  cost: 100
-  _touch: 0
 --- !u!61 &7445229770795177698
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,7 +120,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -166,12 +148,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40810bbc8ab229246a222ba28d1dff53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseColor: {r: 0, g: 0, b: 0, a: 0}
-  _offsetColor: {r: 0, g: 0, b: 0, a: 0}
-  _renderer: {fileID: 0}
-  _highlight: {fileID: 0}
+  _baseColor: {r: 0.27058822, g: 0.53698665, b: 0.8862745, a: 1}
+  _offsetColor: {r: 0.19575472, g: 0.6071418, b: 0.7830189, a: 1}
+  _renderer: {fileID: 2537656216849218152}
+  _highlight: {fileID: 8064040239559799985}
   cost: 0
   _touch: 0
+--- !u!50 &-4769728392734342976
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403911308933903882}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8064040239559799985
 GameObject:
   m_ObjectHideFlags: 0
