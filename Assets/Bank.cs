@@ -6,9 +6,8 @@ using UnityEngine;
 public class Bank : MonoBehaviour
 {
     public static float money = 0;
-
     void Start()
     {
-        money += 100;
+        money = 100;
     }
 }
