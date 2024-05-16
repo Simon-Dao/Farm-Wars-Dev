@@ -6,7 +6,6 @@ using UnityEngine;
 public class Plant : MonoBehaviour
 {
     [SerializeField] private GameObject _self;
-    [SerializeField] private Tile parentTile;
     public float _value;
     public float _growTime;
     public float _decayBuffer;
@@ -14,6 +13,7 @@ public class Plant : MonoBehaviour
     public bool decay = false;
     public Color _claimColor;
 
+    private bool _touch;
     private float _copyValue;
     private float _copyGrowTime;
     private float _copyDecayBuffer;
@@ -26,14 +26,17 @@ public class Plant : MonoBehaviour
     }
     void Update()
     {
-        if (parentTile._ePressed && decay)
+        if (Input.GetKey(KeyCode.E) && decay && _touch)
         {
             Bank.money += _copyValue;
             decay = false;
             _self.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
-            parentTile.CallPlantChange(false);
+            _self.SetActive(false);
             Reset();
         }
+    }
+    void FixedUpdate()
+    {
         if (decay)
         {
             if (_copyDecayBuffer > 0)
@@ -43,7 +46,7 @@ public class Plant : MonoBehaviour
             else if (_copyDecayTime > 0)
             {
                 _copyDecayTime -= Time.deltaTime;
-                _copyValue -= _copyValue * Time.deltaTime;
+                _copyValue -= (float)0.1 * _copyValue * Time.deltaTime;
                 float f = 1 * Time.deltaTime / _decayTime;
                 _self.GetComponent<SpriteRenderer>().color -= new Color(f, f, f, 0);
             }
@@ -57,19 +60,6 @@ public class Plant : MonoBehaviour
                 _self.GetComponent<SpriteRenderer>().color = _claimColor;
             }
         }
-
-        _self.SetActive(parentTile._plant_active);
-    }
-    void OnMouseDown()
-    {
-        if (decay)
-        {
-            Bank.money += _copyValue;
-            decay = false;
-            _self.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
-            parentTile.CallPlantChange(false);
-            Reset();
-        }
     }
     void Reset()
     {
@@ -78,5 +68,19 @@ public class Plant : MonoBehaviour
         _copyGrowTime = _growTime;
         _copyValue = _value;
         _self.GetComponent<SpriteRenderer>().color = _copyColor;
+    }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            _touch = true;
+        }
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            _touch = false;
+        }
     }
 }

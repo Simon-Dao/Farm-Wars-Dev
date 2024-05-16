@@ -5,24 +5,9 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     [SerializeField] private Transform _cam;
-    [SerializeField] private float _camSpeed = 1f;
+    [SerializeField] private Transform _player;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            _cam.Translate(new Vector3(0, _camSpeed * Time.deltaTime, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            _cam.Translate(new Vector3(-_camSpeed * Time.deltaTime, 0, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            _cam.Translate(new Vector3(0, -_camSpeed * Time.deltaTime, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            _cam.Translate(new Vector3(_camSpeed * Time.deltaTime, 0, 0));
-        }
+        _cam.position = new Vector3(_player.transform.position.x, _player.transform.position.y, _cam.transform.position.z);
     }
 }

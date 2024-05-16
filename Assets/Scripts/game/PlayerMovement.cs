@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
+
 public class PlayerMovement : MonoBehaviour
 {
     public Animator animator;
@@ -20,21 +20,16 @@ public class PlayerMovement : MonoBehaviour
     const string WALK_RIGHT = "Walk_Right";
     bool isRunning = false;
     bool isFacingRight = true;
-    
-    private PhotonView view;
-
     void Start()
     {
         animator.Play(IDLE_RIGHT);
         horizontalInput = 0;
         verticalInput = 0;
-        view = GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
         if(Input.GetKey(KeyCode.LeftShift)) {
             isRunning = true;
         } else {
@@ -47,8 +42,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!view.IsMine) return;
-
         CheckDirection();
         if(verticalInput == 0 && horizontalInput == 0) {
             if(isFacingRight) {
