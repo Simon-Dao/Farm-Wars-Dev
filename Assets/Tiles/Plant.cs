@@ -6,6 +6,7 @@ using UnityEngine;
 public class Plant : MonoBehaviour
 {
     [SerializeField] private GameObject _self;
+    [SerializeField] private Tile parentTile;
     public float _value;
     public float _growTime;
     public float _decayBuffer;
@@ -26,12 +27,13 @@ public class Plant : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.E) && decay && _touch)
+        if (parentTile._ePressed && decay) //&& _touch)
         {
             Bank.money += _copyValue;
             decay = false;
             _self.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
-            _self.SetActive(false);
+            // _self.SetActive(false);
+            parentTile.CallPlantChange(false);
             Reset();
         }
     }

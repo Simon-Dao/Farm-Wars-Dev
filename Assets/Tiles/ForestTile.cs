@@ -1,14 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class ForestTile : Tile
 {
     [SerializeField] private GameObject _self;
     [SerializeField] private Tile _land;
+    [PunRPC]
+    void SetPlant(bool newState)
+    {
+        _plant_active = newState;
+    }
+    [PunRPC]
+    void SetEPressed(bool newState)
+    {
+        _ePressed = newState;
+    }
     void Update()
     {
-        if (_touch && Bank.money >= cost && Input.GetKey(KeyCode.E))
+        CallEPressed(Input.GetKey(KeyCode.E));
+
+        if (_touch && Bank.money >= cost && _ePressed)
         {
             Bank.money -= cost;
             var worldPosition = _self.transform.position;
