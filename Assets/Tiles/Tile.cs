@@ -14,7 +14,7 @@ public class Tile : MonoBehaviour
     {
         _renderer.color = isOffset ? _offsetColor : _baseColor;
     }
-    void OnTriggerEnter2D(Collider2D col)
+    protected void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Player")
         {
@@ -22,7 +22,7 @@ public class Tile : MonoBehaviour
             _touch = true;
         }
     }
-    void OnTriggerExit2D(Collider2D col)
+    protected void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.tag == "Player")
         {
