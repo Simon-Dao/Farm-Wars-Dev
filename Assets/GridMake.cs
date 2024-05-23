@@ -8,7 +8,7 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] private int _width, _height;
     [SerializeField] private Grid _grid;
-    [SerializeField] private Tile _forestTile, _waterTile, _landTile;
+    [SerializeField] private Tile _forestTile, _waterTile, _landTile, _borderTile;
     [SerializeField] private Transform _cam;
     private Dictionary<Vector2, Tile> _tiles;
 
@@ -24,17 +24,27 @@ public class GridManager : MonoBehaviour
         {
             for (int y = -(_width / 2); y < _width / 2; y++)
             {
-                var randomTile = UnityEngine.Random.Range(0, 5) < 3 ? _forestTile : _landTile;
-                if (randomTile == _forestTile) randomTile = UnityEngine.Random.Range(0, 5) == 4 ? _waterTile : _forestTile;
-                var worldPosition = _grid.GetCellCenterWorld(new Vector3Int(x, y));
-                var spawnedTile = Instantiate(randomTile, worldPosition, Quaternion.identity);
-                spawnedTile.name = $"Tile {x} {y}";
+                if (x == -(_height / 2) || y == -(_width / 2) || x == (_height / 2) - 1 || y == (_width / 2) - 1)
+                {
+                    var worldPosition = _grid.GetCellCenterWorld(new Vector3Int(x, y));
+                    var spawnedTile = Instantiate(_borderTile, worldPosition, Quaternion.identity);
+                    spawnedTile.name = $"Border {x} {y}";
 
-                var isOffset = UnityEngine.Random.Range(0, 2) == 1 ? true : false;
-                spawnedTile.Init(isOffset);
+                    _tiles[new Vector2(x, y)] = spawnedTile;
+                }
+                else
+                {
+                    var randomTile = UnityEngine.Random.Range(0, 5) < 3 ? _forestTile : _landTile;
+                    if (randomTile == _forestTile) randomTile = UnityEngine.Random.Range(0, 5) == 4 ? _waterTile : _forestTile;
+                    var worldPosition = _grid.GetCellCenterWorld(new Vector3Int(x, y));
+                    var spawnedTile = Instantiate(randomTile, worldPosition, Quaternion.identity);
+                    spawnedTile.name = $"Tile {x} {y}";
 
+                    var isOffset = UnityEngine.Random.Range(0, 2) == 1 ? true : false;
+                    spawnedTile.Init(isOffset);
 
-                _tiles[new Vector2(x, y)] = spawnedTile;
+                    _tiles[new Vector2(x, y)] = spawnedTile;
+                }
             }
         }
 

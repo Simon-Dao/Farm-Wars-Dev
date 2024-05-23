@@ -107,6 +107,10 @@ MonoBehaviour:
   _decayTime: 5
   decay: 0
   _claimColor: {r: 0.26853323, g: 1, b: 0, a: 1}
+  _multiRangeMin: 1.1
+  _multiRangeMax: 1.5
+  _claimCooldown: 2
+  _cooldownTimer: 0
 --- !u!61 &2590941193799509708
 BoxCollider2D:
   m_ObjectHideFlags: 0

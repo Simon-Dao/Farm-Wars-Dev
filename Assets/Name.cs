@@ -41,7 +41,6 @@ public class DebugNameDisplay : MonoBehaviour
         // Draw the box label
         GUI.Box(new Rect(boxPosition.x, boxPosition.y, boxWidth, boxHeight), targetObject.GetComponent<Player>()._playerName.ToString());
     }
-
     void Update()
     {
         // Toggle the labels using the specified key

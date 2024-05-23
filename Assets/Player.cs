@@ -6,11 +6,6 @@ public class Player : MonoBehaviour, ICloneable
     public int _playerID;
     public Color _color;
     public String _playerName;
-    void Start()
-    {
-        // Initialization code here
-    }
-
     public int GetID()
     {
         return _playerID;
