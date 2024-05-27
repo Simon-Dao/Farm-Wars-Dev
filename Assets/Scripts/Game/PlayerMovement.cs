@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     bool isRunning = false;
     bool isFacingRight = true;
     private PhotonView photonView;
+
     void Start()
     {
         animator.Play(IDLE_RIGHT);
@@ -33,9 +34,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.LeftShift)) {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
             isRunning = true;
-        } else {
+        }
+        else
+        {
             isRunning = false;
         }
 
@@ -45,49 +49,71 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!photonView.IsMine) return;
+        if (!photonView.IsMine) return;
 
         CheckDirection();
-        if(verticalInput == 0 && horizontalInput == 0) {
-            if(isFacingRight) {
+        if (verticalInput == 0 && horizontalInput == 0)
+        {
+            if (isFacingRight)
+            {
                 ChangeAnimationState(IDLE_RIGHT);
-            } else {
+            }
+            else
+            {
                 ChangeAnimationState(IDLE_LEFT);
             }
-        } else if(horizontalInput > 0 && !isRunning) {
-            if(isFacingRight) {
+        }
+        else if (horizontalInput > 0 && !isRunning)
+        {
+            if (isFacingRight)
+            {
                 ChangeAnimationState(WALK_RIGHT);
-            } else {
+            }
+            else
+            {
                 ChangeAnimationState(WALK_LEFT);
             }
-        } else {
-            if(isFacingRight) {
+        }
+        else
+        {
+            if (isFacingRight)
+            {
                 ChangeAnimationState(RUN_RIGHT);
-            } else {
+            }
+            else
+            {
                 ChangeAnimationState(RUN_LEFT);
             }
         }
 
 
         Vector3 moveDirection = new Vector3(horizontalInput, verticalInput, 0).normalized;
-        if(isRunning) {
+        if (isRunning)
+        {
             moveSpeed = sprintSpeed;
-        } else {
+        }
+        else
+        {
             moveSpeed = walkSpeed;
         }
-            transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
     }
 
-    void CheckDirection() {
-        if(horizontalInput > 0) {
+    void CheckDirection()
+    {
+        if (horizontalInput > 0)
+        {
             isFacingRight = true;
-        } else if(horizontalInput < 0) {
+        }
+        else if (horizontalInput < 0)
+        {
             isFacingRight = false;
         }
     }
 
-    void ChangeAnimationState(string newState) {
-        if(currentState == newState) return;
+    void ChangeAnimationState(string newState)
+    {
+        if (currentState == newState) return;
         animator.Play(newState);
         currentState = newState;
     }

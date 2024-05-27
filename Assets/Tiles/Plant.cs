@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class Plant : MonoBehaviour
 {
     [SerializeField] private GameObject _self;
-    [SerializeField] private Tile parentTile;
+    [SerializeField] private LandTile parentTile;
     public float _value;
     public float _growTime;
     public float _decayBuffer;
     public float _decayTime;
     public bool decay = false;
     public Color _claimColor;
+    public float _multiRangeMin;
+    public float _multiRangeMax;
+    public float _claimCooldown = 2f; // Cooldown period in seconds
 
     private bool _touch;
     private float _copyValue;
@@ -20,23 +20,34 @@ public class Plant : MonoBehaviour
     private float _copyDecayBuffer;
     private float _copyDecayTime;
     private Color _copyColor;
+    [SerializeField] private float _cooldownTimer = 0f;
+    private InputManager inputManager;
+
     void Start()
     {
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        _value *= Random.Range(_multiRangeMin, _multiRangeMax);
         _copyColor = _self.GetComponent<SpriteRenderer>().color;
         Reset();
     }
+
     void Update()
     {
-        if (parentTile._ePressed && decay) //&& _touch)
+        if (_cooldownTimer > 0)
+        {
+            _cooldownTimer -= Time.deltaTime;
+        }
+
+        if (inputManager._ePressed && decay && _touch && _cooldownTimer <= 0)
         {
             Bank.money += _copyValue;
             decay = false;
             _self.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
-            // _self.SetActive(false);
-            parentTile.CallPlantChange(false);
+            inputManager.CallPlantChange(false);
             Reset();
         }
     }
+
     void FixedUpdate()
     {
         if (decay)
@@ -48,21 +59,22 @@ public class Plant : MonoBehaviour
             else if (_copyDecayTime > 0)
             {
                 _copyDecayTime -= Time.deltaTime;
-                _copyValue -= (float)0.1 * _copyValue * Time.deltaTime;
-                float f = 1 * Time.deltaTime / _decayTime;
-                _self.GetComponent<SpriteRenderer>().color -= new Color(f, f, f, 0);
+                _copyValue -= 0.1f * _copyValue * Time.deltaTime;
+                float fadeAmount = Time.deltaTime / _decayTime;
+                _self.GetComponent<SpriteRenderer>().color -= new Color(fadeAmount, fadeAmount, fadeAmount, 0);
             }
         }
-        else if (_self.activeSelf && _self.GetComponent<SpriteRenderer>().color.a < 255)
+        else if (_self.activeSelf && _self.GetComponent<SpriteRenderer>().color.a < 1f)
         {
-            _self.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, (1 * Time.deltaTime) / _growTime);
-            if (_self.GetComponent<SpriteRenderer>().color.a >= 0.9)
+            _self.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, Time.deltaTime / _growTime);
+            if (_self.GetComponent<SpriteRenderer>().color.a >= 0.9f)
             {
                 decay = true;
                 _self.GetComponent<SpriteRenderer>().color = _claimColor;
             }
         }
     }
+
     void Reset()
     {
         _copyDecayBuffer = _decayBuffer;
@@ -70,17 +82,20 @@ public class Plant : MonoBehaviour
         _copyGrowTime = _growTime;
         _copyValue = _value;
         _self.GetComponent<SpriteRenderer>().color = _copyColor;
+        _self.SetActive(true);
     }
+
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.CompareTag("Player"))
         {
             _touch = true;
         }
     }
+
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.CompareTag("Player"))
         {
             _touch = false;
         }

@@ -5,15 +5,15 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Photon.Pun;
 
-public class GridManager : MonoBehaviour
+public class GridManager : MonoBehaviourPun
 {
     [SerializeField] private int _width, _height;
+    // [SerializeField] private Grid _grid;
     [SerializeField] private GameObject _grid_prefab;
-    [SerializeField] private Tile _forestTile, _waterTile, _landTile;
+
+    [SerializeField] private Tile _forestTile, _waterTile, _landTile, _borderTile;
     [SerializeField] private Transform _cam;
     private Dictionary<Vector2, Tile> _tiles;
-
-    private PhotonView photonView;
 
     void Start()
     {
@@ -30,16 +30,27 @@ public class GridManager : MonoBehaviour
         {
             for (int y = -(_width / 2); y < _width / 2; y++)
             {
-                var randomTile = UnityEngine.Random.Range(0, 5) < 3 ? _forestTile : _landTile;
-                if (randomTile == _forestTile) randomTile = UnityEngine.Random.Range(0, 5) == 4 ? _waterTile : _forestTile;
-                var worldPosition = _grid_prefab.GetComponent<Grid>().GetCellCenterWorld(new Vector3Int(x, y));
-                var spawnedTile = PhotonNetwork.Instantiate(randomTile.name, worldPosition, Quaternion.identity);
-                spawnedTile.name = $"Tile {x} {y}";
+                if (x == -(_height / 2) || y == -(_width / 2) || x == (_height / 2) - 1 || y == (_width / 2) - 1)
+                {
+                    var worldPosition = _grid_prefab.GetComponent<Grid>().GetCellCenterWorld(new Vector3Int(x, y));
+                    var spawnedTile = PhotonNetwork.Instantiate(_borderTile.name, worldPosition, Quaternion.identity);
+                    spawnedTile.name = $"Border {x} {y}";
 
-                //var isOffset = UnityEngine.Random.Range(0, 2) == 1 ? true : false;
-                spawnedTile.GetComponent<Tile>().Init(true);
+                    _tiles[new Vector2(x, y)] = spawnedTile.GetComponent<Tile>();
+                }
+                else
+                {
+                    var randomTile = UnityEngine.Random.Range(0, 5) < 3 ? _forestTile : _landTile;
+                    if (randomTile == _forestTile) randomTile = UnityEngine.Random.Range(0, 5) == 4 ? _waterTile : _forestTile;
+                    var worldPosition = _grid_prefab.GetComponent<Grid>().GetCellCenterWorld(new Vector3Int(x, y));
+                    var spawnedTile = Instantiate(randomTile, worldPosition, Quaternion.identity);
+                    spawnedTile.name = $"Tile {x} {y}";
 
-                _tiles[new Vector2(x, y)] = spawnedTile.GetComponent<Tile>();
+                    var isOffset = UnityEngine.Random.Range(0, 2) == 1 ? true : false;
+                    spawnedTile.Init(isOffset);
+
+                    _tiles[new Vector2(x, y)] = spawnedTile;
+                }
             }
         }
 
