@@ -16,6 +16,7 @@ public class ForestTile : Tile
     void Start()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        _tile_name = "forest";
     }
 
     void Update()

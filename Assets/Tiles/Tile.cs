@@ -11,6 +11,8 @@ public class Tile : MonoBehaviourPun
     [SerializeField] protected GameObject _highlight;
     [SerializeField] protected int cost;
     [SerializeField] protected bool _touch;
+
+    protected string _tile_name = "tile";
     
     public void Init(bool isOffset)
     {

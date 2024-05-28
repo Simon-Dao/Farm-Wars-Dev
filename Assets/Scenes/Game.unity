@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 14952129}
   - component: {fileID: 14952128}
+  - component: {fileID: 14952130}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -171,6 +172,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &14952130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14952127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d746c1965f34d9446b4186965f8357cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebugInfoGUI: 1
+  boxWidth: 229
+  boxHeight: 33
+  boxYOffset: 24.2
+  fontSize: 22
+  toggleKey: 9
 --- !u!1 &178522453
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ePressed: 0
+  _plant_active: 0
 --- !u!114 &1167010459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,7 +508,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 1
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1167010458}
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0

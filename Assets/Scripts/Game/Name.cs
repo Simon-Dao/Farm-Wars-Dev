@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
+using Photon.Pun;
 using UnityEngine;
-
 public class DebugNameDisplay : MonoBehaviour
 {
-    [SerializeField] bool showDebugInfoGUI;
+    [SerializeField] bool showDebugInfoGUI = true;
     [SerializeField] float boxWidth = 150f;
-    [SerializeField] float boxHeight = 20f;
+    [SerializeField] float boxHeight = 40f;
+    [SerializeField] float boxYOffset = 30f;
     [SerializeField] int fontSize;
-    [SerializeField] KeyCode toggleKey = KeyCode.Slash;
+    [SerializeField] KeyCode toggleKey = KeyCode.Tab;
 
     void OnGUI()
     {
@@ -24,6 +26,10 @@ public class DebugNameDisplay : MonoBehaviour
         }
     }
 
+    void Start() {
+        showDebugInfoGUI = true;
+    }
+
     void ShowObjectNameInGUI(GameObject targetObject)
     {
         if (Camera.main == null) return;
@@ -36,10 +42,14 @@ public class DebugNameDisplay : MonoBehaviour
 
         // Center the label over the coordinates
         boxPosition.x -= boxWidth * 0.5f;
-        boxPosition.y -= boxHeight + 50;
+        boxPosition.y -= boxHeight + boxYOffset;
+
+        string playerName = targetObject.GetComponent<PhotonView>().Owner.NickName;
+        targetObject.GetComponent<Player>()._playerName = playerName;
 
         // Draw the box label
-        GUI.Box(new Rect(boxPosition.x, boxPosition.y, boxWidth, boxHeight), targetObject.GetComponent<Player>()._playerName.ToString());
+        GUI.contentColor = Color.red;
+        GUI.Box(new Rect(boxPosition.x, boxPosition.y, boxWidth, boxHeight), targetObject.GetComponent<Player>()._playerName);
     }
     void Update()
     {

@@ -17,12 +17,35 @@ public class GridManager : MonoBehaviourPun
 
     void Start()
     {
-        if(PhotonNetwork.IsMasterClient) {
+        if (PhotonNetwork.IsMasterClient)
+        {
             GenerateGrid();
             PhotonNetwork.Instantiate(_grid_prefab.name, new Vector3(), Quaternion.identity);
         }
     }
 
+    string GetRandomTileName(Tile randomTile)
+    {
+        string tileTitle = "";
+
+        if (randomTile == _forestTile)
+        {
+            tileTitle = "forest";
+        }
+        else if (randomTile == _landTile)
+        {
+            tileTitle = "land";
+        }
+        else if (randomTile == _waterTile)
+        {
+            tileTitle = "water";
+        }
+        else
+        {
+            tileTitle = "tile";
+        }
+        return tileTitle;
+    }
     void GenerateGrid()
     {
         _tiles = new Dictionary<Vector2, Tile>();
@@ -42,14 +65,17 @@ public class GridManager : MonoBehaviourPun
                 {
                     var randomTile = UnityEngine.Random.Range(0, 5) < 3 ? _forestTile : _landTile;
                     if (randomTile == _forestTile) randomTile = UnityEngine.Random.Range(0, 5) == 4 ? _waterTile : _forestTile;
+
+                    string tileTitle = GetRandomTileName(randomTile);
+
                     var worldPosition = _grid_prefab.GetComponent<Grid>().GetCellCenterWorld(new Vector3Int(x, y));
-                    var spawnedTile = Instantiate(randomTile, worldPosition, Quaternion.identity);
-                    spawnedTile.name = $"Tile {x} {y}";
+                    var spawnedTile = PhotonNetwork.Instantiate(randomTile.name, worldPosition, Quaternion.identity);
+                    spawnedTile.name = $"{tileTitle} {x} {y}";
 
-                    var isOffset = UnityEngine.Random.Range(0, 2) == 1 ? true : false;
-                    spawnedTile.Init(isOffset);
+                    // var isOffset = UnityEngine.Random.Range(0, 2) == 1 ? true : false;
+                    spawnedTile.GetComponent<Tile>().Init(true);
 
-                    _tiles[new Vector2(x, y)] = spawnedTile;
+                    _tiles[new Vector2(x, y)] = spawnedTile.GetComponent<Tile>();
                 }
             }
         }

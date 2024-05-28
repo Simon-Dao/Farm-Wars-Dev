@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerID: 100
   _color: {r: 1, g: 0, b: 0, a: 1}
-  _playerName: placeholder
+  _playerName: a
 --- !u!114 &2471596899578277827
 MonoBehaviour:
   m_ObjectHideFlags: 0

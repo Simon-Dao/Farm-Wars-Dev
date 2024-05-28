@@ -75,7 +75,7 @@ public class Plant : MonoBehaviour
         }
     }
 
-    void Reset()
+    public void Reset()
     {
         _copyDecayBuffer = _decayBuffer;
         _copyDecayTime = _decayTime;

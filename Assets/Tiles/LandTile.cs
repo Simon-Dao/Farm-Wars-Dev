@@ -18,6 +18,7 @@ public class LandTile : Tile
 
     void Start() {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        _tile_name = "land";
     }
 
     void Update()
@@ -54,6 +55,7 @@ public class LandTile : Tile
     {
         Bank.money -= _plantCost;
         inputManager.CallPlantChange(true);
+        _plant.GetComponent<Plant>().Reset();
         _multiplier *= _multiplierMultiplier;
     }
 

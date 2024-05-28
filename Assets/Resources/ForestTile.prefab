@@ -155,8 +155,6 @@ MonoBehaviour:
   _highlight: {fileID: 8064040239559799985}
   cost: 10
   _touch: 0
-  _ePressed: 0
-  _plant_active: 0
   _self: {fileID: 1403911308933903882}
   _land: {fileID: 6544019346934931844, guid: 2e5b7bb857be3f1429d8340da20bce1d, type: 3}
 --- !u!114 &-4068136596325986088
