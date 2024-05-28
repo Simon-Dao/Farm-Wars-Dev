@@ -55,7 +55,7 @@ public class LandTile : Tile
     {
         Bank.money -= _plantCost;
         inputManager.CallPlantChange(true);
-        _plant.GetComponent<Plant>().Reset();
+        // _plant.GetComponent<Plant>().Reset();
         _multiplier *= _multiplierMultiplier;
     }
 
