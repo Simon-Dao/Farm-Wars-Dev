@@ -13,12 +13,17 @@ public class Plant : MonoBehaviour
     public float _multiRangeMax;
     public float _claimCooldown = 2f; // Cooldown period in seconds
 
+    public Animator animator;
     private bool _touch;
     private float _copyValue;
     private float _copyGrowTime;
     private float _copyDecayBuffer;
     private float _copyDecayTime;
     private Color _copyColor;
+
+    private const string CORN = "Corn";
+    private const string WHEAT = "Wheat";
+    private const string EGGPLANT = "Eggplant";
     [SerializeField] private float _cooldownTimer = 0f;
 
     void Start()
@@ -43,6 +48,20 @@ public class Plant : MonoBehaviour
             _self.SetActive(false);
             _cooldownTimer = _claimCooldown; // Start cooldown after claiming
             Reset();
+
+            int plantType = Random.Range(0, 100);
+            if (plantType < 5)
+            {
+                animator.Play(CORN);
+            }
+            else if (plantType < 10)
+            {
+                animator.Play(EGGPLANT);
+            }
+            else
+            {
+                animator.Play(WHEAT);
+            }
         }
     }
 

@@ -155,6 +155,7 @@ MonoBehaviour:
   _forestTile: {fileID: 5774045727027589363, guid: 578501be66fd2c14eb225f9ce848ab17, type: 3}
   _waterTile: {fileID: 5884895220027027463, guid: 04d8849b5db593747b6e2f216e73ce90, type: 3}
   _landTile: {fileID: 6544019346934931844, guid: 2e5b7bb857be3f1429d8340da20bce1d, type: 3}
+  _borderTile: {fileID: 1422402194179049730, guid: 040daa69be02f3b4fa2446a2a29feb41, type: 3}
   _cam: {fileID: 519420032}
 --- !u!4 &14952129
 Transform:
@@ -752,7 +753,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 345.11, y: 164.3}
+  m_SizeDelta: {x: 1920, y: 164.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1798522086
 MonoBehaviour:
@@ -1011,6 +1012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerID: 100
   _color: {r: 1, g: 0, b: 0, a: 1}
+  _playerName: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

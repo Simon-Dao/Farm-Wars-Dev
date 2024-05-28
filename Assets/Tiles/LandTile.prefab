@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 27082757363672674}
   - component: {fileID: 769422288582075262}
   - component: {fileID: 2590941193799509708}
+  - component: {fileID: 745512269412899987}
   m_Layer: 0
   m_Name: Plant
   m_TagString: Untagged
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: -712631045867808456, guid: b670ab75dde984907b8570040daa08c5, type: 3}
   m_Color: {r: 0.990566, g: 0.9669648, b: 0, a: 0}
   m_FlipX: 0
@@ -110,6 +111,7 @@ MonoBehaviour:
   _multiRangeMin: 1.1
   _multiRangeMax: 1.5
   _claimCooldown: 2
+  animator: {fileID: 745512269412899987}
   _cooldownTimer: 0
 --- !u!61 &2590941193799509708
 BoxCollider2D:
@@ -157,6 +159,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.8828125}
   m_EdgeRadius: 0
+--- !u!95 &745512269412899987
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127517220152847975}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 60a523e382fc5c841a61674af861f59a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1403911308933903882
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +449,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_Sprite: {fileID: -712631045867808456, guid: dd0ef25b2e311f9448b11ef435df5420, type: 3}
   m_Color: {r: 0.09803922, g: 0.35686275, b: 0.15686275, a: 1}
   m_FlipX: 0
@@ -511,7 +535,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -712631045867808456, guid: b670ab75dde984907b8570040daa08c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.19215687}
   m_FlipX: 0
