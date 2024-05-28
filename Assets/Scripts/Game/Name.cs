@@ -44,12 +44,9 @@ public class DebugNameDisplay : MonoBehaviour
         boxPosition.x -= boxWidth * 0.5f;
         boxPosition.y -= boxHeight + boxYOffset;
 
-        string playerName = targetObject.GetComponent<PhotonView>().Owner.NickName;
-        targetObject.GetComponent<Player>()._playerName = playerName;
-
         // Draw the box label
         GUI.contentColor = Color.red;
-        GUI.Box(new Rect(boxPosition.x, boxPosition.y, boxWidth, boxHeight), targetObject.GetComponent<Player>()._playerName);
+        GUI.Box(new Rect(boxPosition.x, boxPosition.y, boxWidth, boxHeight), targetObject.GetComponent<Player>()._playerID.ToString());
     }
     void Update()
     {

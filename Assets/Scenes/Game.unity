@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde631c33661fb64d96bc73a780f80c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 40
-  _height: 20
+  _width: 10
+  _height: 10
   _grid_prefab: {fileID: 1291231798}
   _forestTile: {fileID: 5774045727027589363, guid: 578501be66fd2c14eb225f9ce848ab17, type: 3}
   _waterTile: {fileID: 5884895220027027463, guid: 04d8849b5db593747b6e2f216e73ce90, type: 3}

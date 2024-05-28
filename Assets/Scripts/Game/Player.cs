@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Photon.Pun;
 
 public class Player : MonoBehaviour, ICloneable
 {
@@ -7,6 +8,11 @@ public class Player : MonoBehaviour, ICloneable
     public Color _color;
     public String _playerName;
 
+    void Start() {
+        _playerName = GetComponent<PhotonView>().Owner.NickName;
+        _playerID = GetComponent<PhotonView>().Owner.ActorNumber;
+
+    }
     public int GetID()
     {
         return _playerID;

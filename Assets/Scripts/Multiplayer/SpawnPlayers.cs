@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System;
 
 public class SpawnPlayers : MonoBehaviour
 {
@@ -15,8 +16,7 @@ public class SpawnPlayers : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector2 randomPos = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-        // playerPrefab.GetComponent<Player>()._playerID = 
+        Vector2 randomPos = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
         PhotonNetwork.Instantiate(playerPrefab.name, randomPos, Quaternion.identity);
     }
 }
