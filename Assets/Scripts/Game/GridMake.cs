@@ -46,6 +46,8 @@ public class GridManager : MonoBehaviourPun
         }
         return tileTitle;
     }
+
+    [PunRPC]
     void GenerateGrid()
     {
         _tiles = new Dictionary<Vector2, Tile>();
@@ -57,6 +59,7 @@ public class GridManager : MonoBehaviourPun
                 {
                     var worldPosition = _grid_prefab.GetComponent<Grid>().GetCellCenterWorld(new Vector3Int(x, y));
                     var spawnedTile = PhotonNetwork.Instantiate(_borderTile.name, worldPosition, Quaternion.identity);
+                    spawnedTile.GetComponent<Tile>()._tile_id = $"Border {x} {y}";
                     spawnedTile.name = $"Border {x} {y}";
 
                     _tiles[new Vector2(x, y)] = spawnedTile.GetComponent<Tile>();
@@ -70,7 +73,20 @@ public class GridManager : MonoBehaviourPun
 
                     var worldPosition = _grid_prefab.GetComponent<Grid>().GetCellCenterWorld(new Vector3Int(x, y));
                     var spawnedTile = PhotonNetwork.Instantiate(randomTile.name, worldPosition, Quaternion.identity);
-                    spawnedTile.name = $"{tileTitle} {x} {y}";
+                    //spawnedTile.GetComponent<Tile>()._tile_id = $"{tileTitle} {x} {y}";
+                    //spawnedTile.name = $"{tileTitle} {x} {y}";
+
+                    //todo fix later
+                    if (spawnedTile.GetComponent<LandTile>() != null)
+                    {
+                        spawnedTile.GetComponent<LandTile>().CallTileIDSet($"{tileTitle} {x} {y}");
+                    }
+                    else
+                     if (spawnedTile.GetComponent<ForestTile>() != null)
+                    {
+                        spawnedTile.GetComponent<ForestTile>().CallTileIDSet($"{tileTitle} {x} {y}");
+                    }
+
 
                     // var isOffset = UnityEngine.Random.Range(0, 2) == 1 ? true : false;
                     spawnedTile.GetComponent<Tile>().Init(true);
@@ -81,11 +97,25 @@ public class GridManager : MonoBehaviourPun
         }
 
         _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
+        GetComponent<PhotonView>().RPC("GenerateGrid", RpcTarget.Others);
     }
 
     public Tile GetTileAtPosition(Vector2 pos)
     {
         if (_tiles.TryGetValue(pos, out var tile)) return tile;
         return null;
+    }
+
+    public Tile GetTileAtPosition(string tileName)
+    {
+
+        string[] tokens = tileName.Split(" ");
+        int x = int.Parse(tokens[1]);
+        int y = int.Parse(tokens[2]);
+
+        Debug.Log(tileName);
+        Debug.Log(tokens);
+
+        return GetTileAtPosition(new Vector2(x, y));
     }
 }

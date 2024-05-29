@@ -2,69 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
 public class InputManager : MonoBehaviour, IPunObservable
 {
-    public bool _ePressed = false;
-    public bool _plant_active = false;
+    public string _action_triggered = "";
 
+    public TMP_Text _debug_text;
     private PhotonView photonView;
 
     public void DestroyNetworkObject(string objToDestroy)
-    {   
+    {
         photonView.RPC("DestroyObj", RpcTarget.AllBuffered, objToDestroy);
     }
 
     [PunRPC]
-    public void DestroyObj(string objToDestroy) {
+    public void DestroyObj(string objToDestroy)
+    {
         Destroy(GameObject.Find(objToDestroy));
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(_plant_active);
-            stream.SendNext(_ePressed);
-        }
-        else if (stream.IsReading)
-        {
-            _plant_active = (bool)stream.ReceiveNext();
-            _ePressed = (bool)stream.ReceiveNext();
-        }
+
     }
 
     [PunRPC]
-    void SetPlant(bool newState)
+    void SetActionTriggered(string newAction)
     {
-        Debug.Log("setting plant " + newState);
-        _plant_active = newState;
+        _action_triggered = newAction;
     }
-    public void CallPlantChange(bool newState)
+    public void CallActionTriggered(string newAction)
     {
-        if (newState != _plant_active)
-        {
-            photonView.RPC("SetPlant", RpcTarget.AllBuffered, newState);
+        if(newAction != _action_triggered) {
+            photonView.RPC("SetActionTriggered", RpcTarget.AllBuffered, newAction);
         }
     }
 
-    [PunRPC]
-    void SetEPressed(bool newState)
-    {
-        _ePressed = newState;
+    public void ResetActionTriggered() {
+        _action_triggered = "";
     }
+
+    public bool IsTileTriggered(string tileName, int playerID) {
+        if(_action_triggered == "") return false;
+
+
+        if(tileName == "" && _action_triggered.Split(";")[1] == "") return false;
+        if(playerID == 0 && _action_triggered.Split(";")[0] == "") return false;
+
+        return tileName == _action_triggered.Split(";")[1] && _action_triggered.Split(";")[0] == playerID.ToString();        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         photonView = GetComponent<PhotonView>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.E) != _ePressed)
-        {
-            photonView.RPC("SetEPressed", RpcTarget.AllBuffered, Input.GetKey(KeyCode.E));
-        }
+        _action_triggered = "";
     }
 }

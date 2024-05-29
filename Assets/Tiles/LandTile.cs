@@ -3,44 +3,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Data.Common;
+using TMPro;
 
 public class LandTile : Tile
 {
     [SerializeField] private GameObject _plant;
     [SerializeField] public SpriteRenderer _c;
     [SerializeField] protected Owner _owner;
-    [SerializeField] protected Player _currPlayer = null;
     public float _multiplier = 1f;
     public float _multiplierMultiplier = 1.1f;
     public float _plantCost = 50f;
 
+    private string _animation_state = "";
     private InputManager inputManager;
 
-    void Start() {
+    void Start()
+    {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
-        _tile_name = "land";
+        gameObject.name = _tile_id;
     }
 
     void Update()
     {
         if (!_touch) return;
+        if(_currPlayer == null) return;
 
-        if (inputManager._ePressed)
+        updateEPressed(inputManager);
+
+        if (inputManager.IsTileTriggered(_tile_id, _currPlayer._playerID))
         {
-            if (Bank.money >= cost && !inputManager._plant_active && _owner == null)
+            if (Bank.money >= cost && !_plant.activeSelf && _owner == null)
             {
                 PurchaseTile();
             }
-            else if (Bank.money >= _plantCost && !inputManager._plant_active && _owner == _currPlayer)
+            else if (Bank.money >= _plantCost && !_plant.activeSelf && _owner == _currPlayer)
             {
                 PlantOnTile();
+                ChangeAnimationState("Wheat");
             }
-            else if (Bank.money >= (cost * _multiplier) && !inputManager._plant_active && _owner != _currPlayer && _owner != null)
+            else if (Bank.money >= (cost * _multiplier) && !_plant.activeSelf && _owner != _currPlayer && _owner != null)
             {
                 PurchaseTileFromOtherPlayer();
             }
+            inputManager.ResetActionTriggered();
         }
-        _plant.SetActive(inputManager._plant_active);
     }
 
     private void PurchaseTile()
@@ -54,8 +61,7 @@ public class LandTile : Tile
     private void PlantOnTile()
     {
         Bank.money -= _plantCost;
-        inputManager.CallPlantChange(true);
-        // _plant.GetComponent<Plant>().Reset();
+        _plant.SetActive(true);
         _multiplier *= _multiplierMultiplier;
     }
 
@@ -87,5 +93,20 @@ public class LandTile : Tile
         _touch = false;
         _currPlayer = null;
         base.OnTriggerExit2D(col);
+    }
+    
+    [PunRPC]
+    void SetTileID(string name) {
+        _tile_id = name;
+        gameObject.name = name;
+    }
+
+    public void CallTileIDSet(string name) {
+        photonView.RPC("SetTileID", RpcTarget.AllBuffered, name);
+    }
+    void ChangeAnimationState(string newState)
+    {
+        if (_animation_state == newState) return;
+        _animation_state = newState;
     }
 }

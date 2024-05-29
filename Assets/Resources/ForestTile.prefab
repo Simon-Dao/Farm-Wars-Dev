@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5774045727027589363}
   - component: {fileID: -4068136596325986088}
   - component: {fileID: -3841258085163795950}
+  - component: {fileID: 1457110025018850474}
   m_Layer: 0
   m_Name: ForestTile
   m_TagString: Untagged
@@ -155,6 +156,9 @@ MonoBehaviour:
   _highlight: {fileID: 8064040239559799985}
   cost: 10
   _touch: 0
+  _currPlayer: {fileID: 0}
+  _tile_id: 
+  _ePressed: 0
   _self: {fileID: 1403911308933903882}
   _land: {fileID: 6544019346934931844, guid: 2e5b7bb857be3f1429d8340da20bce1d, type: 3}
 --- !u!114 &-4068136596325986088
@@ -196,6 +200,21 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &1457110025018850474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403911308933903882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e3e88f2b9a7e24e8004b72398740c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerID: 0
+  _color: {r: 0, g: 0, b: 0, a: 0}
+  _playerName: 
 --- !u!1 &8064040239559799985
 GameObject:
   m_ObjectHideFlags: 0

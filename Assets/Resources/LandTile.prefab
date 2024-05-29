@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 27082757363672674}
   - component: {fileID: 769422288582075262}
   - component: {fileID: 2590941193799509708}
+  - component: {fileID: 5833740530622682073}
   m_Layer: 0
   m_Name: Plant
   m_TagString: Untagged
@@ -112,6 +113,7 @@ MonoBehaviour:
   _multiRangeMax: 1.5
   _claimCooldown: 2
   _cooldownTimer: 0
+  animator: {fileID: 5833740530622682073}
 --- !u!61 &2590941193799509708
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -158,6 +160,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.8828125}
   m_EdgeRadius: 0
+--- !u!95 &5833740530622682073
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127517220152847975}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 60a523e382fc5c841a61674af861f59a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1403911308933903882
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,10 +341,12 @@ MonoBehaviour:
   _highlight: {fileID: 8064040239559799985}
   cost: 50
   _touch: 0
+  _currPlayer: {fileID: 0}
+  _tile_id: 
+  _ePressed: 0
   _plant: {fileID: 127517220152847975}
   _c: {fileID: 3870630747510762971}
   _owner: {fileID: 8930744526609739936}
-  _currPlayer: {fileID: 0}
   _multiplier: 1
   _multiplierMultiplier: 1.5
   _plantCost: 50

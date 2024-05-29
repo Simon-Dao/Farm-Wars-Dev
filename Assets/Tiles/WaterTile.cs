@@ -7,6 +7,5 @@ public class WaterTile : Tile
 {
 
     void Start() {
-        _tile_name = "water";
     }
 }

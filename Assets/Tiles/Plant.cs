@@ -23,6 +23,11 @@ public class Plant : MonoBehaviour
     [SerializeField] private float _cooldownTimer = 0f;
     private InputManager inputManager;
 
+    private const string CORN = "Corn";
+    private const string WHEAT = "Wheat";
+    private const string EGGPLANT = "Eggplant";
+    public Animator animator;
+
     void Start()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
@@ -38,13 +43,27 @@ public class Plant : MonoBehaviour
             _cooldownTimer -= Time.deltaTime;
         }
 
-        if (inputManager._ePressed && decay && _touch && _cooldownTimer <= 0)
+        if (parentTile._ePressed && decay && _touch && _cooldownTimer <= 0)
         {
             Bank.money += _copyValue;
             decay = false;
             _self.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
-            inputManager.CallPlantChange(false);
+            _self.SetActive(false);
             Reset();
+
+            int plantType = Random.Range(0, 100);
+            if (plantType < 5)
+            {
+                animator.Play(CORN);
+            }
+            else if (plantType < 10)
+            {
+                animator.Play(EGGPLANT);
+            }
+            else
+            {
+                animator.Play(WHEAT);
+            }
         }
     }
 

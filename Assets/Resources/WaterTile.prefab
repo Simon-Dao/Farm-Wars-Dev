@@ -156,6 +156,9 @@ MonoBehaviour:
   _highlight: {fileID: 8064040239559799985}
   cost: 0
   _touch: 0
+  _currPlayer: {fileID: 0}
+  _tile_id: 
+  _ePressed: 0
 --- !u!50 &-4769728392734342976
 Rigidbody2D:
   serializedVersion: 4
