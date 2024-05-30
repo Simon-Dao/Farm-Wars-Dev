@@ -27,10 +27,13 @@ public class Plant : MonoBehaviour
     private const string WHEAT = "Wheat";
     private const string EGGPLANT = "Eggplant";
     public Animator animator;
+    private Bank bank;
 
     void Start()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        bank = GameObject.Find("Controller").GetComponent<Bank>();
+
         _value *= Random.Range(_multiRangeMin, _multiRangeMax);
         _copyColor = _self.GetComponent<SpriteRenderer>().color;
         Reset();
@@ -45,7 +48,8 @@ public class Plant : MonoBehaviour
 
         if (parentTile._ePressed && decay && _touch && _cooldownTimer <= 0)
         {
-            Bank.money += _copyValue;
+            // Bank.money += _copyValue;
+            bank.CallDeposit(parentTile._currPlayer._playerID, _copyValue);
             decay = false;
             _self.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
             _self.SetActive(false);

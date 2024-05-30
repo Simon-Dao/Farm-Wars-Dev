@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 6621398912548033515}
   - component: {fileID: 3870630747510762971}
   m_Layer: 0
-  m_Name: Hexagon Flat Top
+  m_Name: ColorHold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

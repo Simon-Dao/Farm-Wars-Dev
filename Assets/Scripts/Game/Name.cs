@@ -45,7 +45,7 @@ public class DebugNameDisplay : MonoBehaviour
         boxPosition.y -= boxHeight + boxYOffset;
 
         // Draw the box label
-        GUI.contentColor = Color.blue;
+        GUI.contentColor = targetObject.GetComponent<Player>()._color;
         GUI.Box(new Rect(boxPosition.x, boxPosition.y, boxWidth, boxHeight), targetObject.GetComponent<Player>()._playerName.ToString());
     }
     void Update()

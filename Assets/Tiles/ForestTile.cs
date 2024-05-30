@@ -7,11 +7,13 @@ public class ForestTile : Tile
     [SerializeField] private GameObject _self;
     [SerializeField] private Tile _land;
 
+    private Bank bank;
     private InputManager inputManager;
 
     void Start()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        bank = GameObject.Find("Controller").GetComponent<Bank>();
         gameObject.name = _tile_id;
     }
 
@@ -37,10 +39,10 @@ public class ForestTile : Tile
 
         updateEPressed(inputManager);
 
-        if (Bank.money >= cost && inputManager.IsTileTriggered(_tile_id, _currPlayer._playerID))
+        if (bank.GetBalance(_currPlayer._playerID) >= cost && inputManager.IsTileTriggered(_tile_id, _currPlayer._playerID))
         {
-            Debug.Log(_tile_id);
-            Bank.money -= cost;
+            // bank._accounts[_currPlayer._playerID] -= cost;
+            bank.CallDeposit(_currPlayer._playerID, -cost); 
             var worldPosition = _self.transform.position;
             inputManager.DestroyNetworkObject(_self.name);
             var spawnedTile = PhotonNetwork.Instantiate(_land.name, worldPosition, Quaternion.identity);
@@ -53,26 +55,26 @@ public class ForestTile : Tile
 
     private new void OnTriggerEnter2D(Collider2D col)
     {
-        var player = gameObject.GetComponent<Player>();
-        player._playerID = col.gameObject.GetComponent<Player>()._playerID;
-        player._color = col.gameObject.GetComponent<Player>()._color;
-
         if (!_touch)
         {
-            _touch = true;
-            _currPlayer = player;
+            var player = col.gameObject.GetComponent<Player>();
+            player._playerID = col.gameObject.GetComponent<Player>()._playerID;
+            player._color = col.gameObject.GetComponent<Player>()._color;
+
+            this._currPlayer = player;
+
+            GetComponent<Player>()._playerID = _currPlayer._playerID;
+            GetComponent<Player>()._playerName = _currPlayer._playerName;
+            GetComponent<Player>()._color = _currPlayer._color;
         }
         base.OnTriggerEnter2D(col);
     }
-
     private new void OnTriggerExit2D(Collider2D col)
     {
-        var player = col.GetComponent<Player>();
         _touch = false;
         _currPlayer = null;
         base.OnTriggerExit2D(col);
     }
-
     [PunRPC]
     void SetTileID(string name)
     {

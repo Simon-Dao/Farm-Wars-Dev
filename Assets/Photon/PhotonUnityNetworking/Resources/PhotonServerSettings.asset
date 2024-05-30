@@ -47,6 +47,10 @@ MonoBehaviour:
   - SyncGrid
   - GenerateGrid
   - SetTileID
+  - Deposit
+  - AddAccount
+  - SetElapsed
+  - SyncStartTime
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

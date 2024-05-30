@@ -11,7 +11,7 @@ public class Tile : MonoBehaviourPun
     [SerializeField] protected GameObject _highlight;
     [SerializeField] protected int cost;
     [SerializeField] protected bool _touch;
-    [SerializeField] protected Player _currPlayer = null;
+    [SerializeField] public Player _currPlayer = null;
 
     public string _tile_id;
 

@@ -6,10 +6,21 @@ using TMPro;
 
 public class InputManager : MonoBehaviour, IPunObservable
 {
-    public string _action_triggered = "";
-
-    public TMP_Text _debug_text;
+    [SerializeField] private TMP_Text debugText; // Consider removing if not used
     private PhotonView photonView;
+
+    private string actionTriggered = "";
+
+    void Start()
+    {
+        photonView = GetComponent<PhotonView>();
+        actionTriggered = "";
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        // Implement your code here if needed
+    }
 
     public void DestroyNetworkObject(string objToDestroy)
     {
@@ -17,46 +28,44 @@ public class InputManager : MonoBehaviour, IPunObservable
     }
 
     [PunRPC]
-    public void DestroyObj(string objToDestroy)
+    private void DestroyObj(string objToDestroy)
     {
-        Destroy(GameObject.Find(objToDestroy));
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
+        var obj = GameObject.Find(objToDestroy);
+        if (obj != null)
+        {
+            Destroy(obj);
+        }
     }
 
     [PunRPC]
-    void SetActionTriggered(string newAction)
+    private void SetActionTriggered(string newAction)
     {
-        _action_triggered = newAction;
+        actionTriggered = newAction;
     }
+
     public void CallActionTriggered(string newAction)
     {
-        if(newAction != _action_triggered) {
+        if (newAction != actionTriggered)
+        {
             photonView.RPC("SetActionTriggered", RpcTarget.AllBuffered, newAction);
         }
     }
 
-    public void ResetActionTriggered() {
-        _action_triggered = "";
-    }
-
-    public bool IsTileTriggered(string tileName, int playerID) {
-        if(_action_triggered == "") return false;
-
-
-        if(tileName == "" && _action_triggered.Split(";")[1] == "") return false;
-        if(playerID == 0 && _action_triggered.Split(";")[0] == "") return false;
-
-        return tileName == _action_triggered.Split(";")[1] && _action_triggered.Split(";")[0] == playerID.ToString();        
-    }
-
-    // Start is called before the first frame update
-    void Start()
+    public void ResetActionTriggered()
     {
-        photonView = GetComponent<PhotonView>();
-        _action_triggered = "";
+        actionTriggered = "";
+    }
+
+    public bool IsTileTriggered(string tileName, int playerID)
+    {
+        if (string.IsNullOrEmpty(actionTriggered)) return false;
+
+        string[] parts = actionTriggered.Split(';');
+        if (parts.Length < 2) return false; // Ensure there are enough parts to compare
+
+        bool playerMatch = parts[0] == playerID.ToString();
+        bool tileMatch = parts[1] == tileName;
+
+        return playerMatch && tileMatch;
     }
 }
